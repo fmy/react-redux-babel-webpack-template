@@ -4,9 +4,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 export default {
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8080',
-    'webpack/hot/only-dev-server',
-    './src/index',
+    './src/index.js',
+    './src/index.html',
   ],
 
   output: {
@@ -15,10 +14,6 @@ export default {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    }),
   ],
 
   module: {
@@ -26,7 +21,12 @@ export default {
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
-        loaders: ['react-hot', 'babel'],
+        loaders: ['react-hot', 'babel-loader?cacheDirectory'],
+      },
+      {
+        test: /\.html$/,
+        include: path.join(__dirname, 'src'),
+        loader: 'file?name=[name].[ext]',
       },
     ],
   },
